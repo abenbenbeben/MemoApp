@@ -1,17 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FAB } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 
 export default function CircleButton(props){
-  const { children, style }= props
+  const { children, style, name }= props
   return (
       <FAB
       style={[styles.circleButton, style]}
-      icon={children}
+      icon={props => <Icon name={ name } {...props} />}
       color="#ffffff"
     ></FAB>
   ) 

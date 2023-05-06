@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { FAB } from 'react-native-paper';
+import CircleButton from "./CircleButton";
+import { Feather } from '@expo/vector-icons'; 
 
 
 export default function MemoList(){
@@ -14,7 +16,7 @@ export default function MemoList(){
                     <Text style={styles.memoListItemDate}>2020年12月24日 12:00</Text>
                     </View>
                     <View>
-                    <Text>X</Text>
+                        <Feather name="x" size={16} color="#B0B0B0" />
                     </View>
                 </View>
             </View>
@@ -26,7 +28,7 @@ export default function MemoList(){
                     <Text style={styles.memoListItemDate}>2020年12月24日 12:00</Text>
                     </View>
                     <View>
-                    <Text>X</Text>
+                        <Feather name="x" size={16} color="#B0B0B0" />
                     </View>
                 </View>
             </View>
@@ -38,7 +40,7 @@ export default function MemoList(){
                     <Text style={styles.memoListItemDate}>2020年12月24日 12:00</Text>
                     </View>
                     <View>
-                    <Text>X</Text>
+                        <Feather name="x" size={16} color="#B0B0B0" />
                     </View>
                 </View>
             </View>

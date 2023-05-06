@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, } from 'react-native';
 import { FAB } from 'react-native-paper';
 import AppBar from "../components/AppBar";
 import MemoList from "../components/MemoList";
@@ -21,7 +21,7 @@ export default function MemoDetailScreen(){
                     本文用などで使い方を間違えると見えることもありますので要注意
                 </Text>
             </ScrollView>
-            <CircleButton style={{ top: 160 }}>pencil</CircleButton>
+            <CircleButton style={{ top: 160 }} name="pencil"></CircleButton>
         </View>
     );
 };
