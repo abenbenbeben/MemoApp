@@ -11,8 +11,8 @@ export default function AppBar(){
                 <Text style={styles.appbarRight}>ログアウト</Text>
             </View>
         </View>
-    ) 
-}
+    );
+};
 
 
 

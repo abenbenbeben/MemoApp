@@ -1,22 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FAB } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
-export default function CircleButton(){
-    return (
-        <FAB
-        style={{
-            position:'absolute',
-            right:40,
-            bottom:40,
-            backgroundColor:'#467FD3',
-            borderRadius: 32,
-        }}
-        icon='plus'
-        color="#ffffff"
-      ></FAB>
-    ) 
+
+export default function CircleButton(props){
+  const { children, style }= props
+  return (
+      <FAB
+      style={[styles.circleButton, style]}
+      icon={children}
+      color="#ffffff"
+    ></FAB>
+  ) 
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -24,18 +24,11 @@ const styles = StyleSheet.create({
       backgroundColor: '#f0f4f8',
     },
     circleButton: {
-        backgroundColor: '#467FD3',
-        width: 64,
-        height: 64,
-        borderRadius: 32,
-        alignItems: 'center',
-        position: 'absolute',
+        position:'absolute',
         right: 40,
-        bottom: 40,
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.25,
-        shadowRadius: 40,
+        //bottom: 40,
+        backgroundColor:'#467FD3',
+        borderRadius: 32,
       },
       circleButtonLabel: {
         color: '#ffffff',
