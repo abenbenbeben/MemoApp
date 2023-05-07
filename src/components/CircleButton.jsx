@@ -7,12 +7,13 @@ import { FontAwesome } from '@expo/vector-icons';
 
 
 export default function CircleButton(props){
-  const { children, style, name }= props
+  const { children, style, name, onPress }= props
   return (
       <FAB
       style={[styles.circleButton, style]}
       icon={props => <Icon name={ name } {...props} />}
       color="#ffffff"
+      onPress={ onPress }
     ></FAB>
   ) 
 }

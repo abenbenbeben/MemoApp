@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View, TextInput} from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { FAB } from 'react-native-paper';
 import AppBar from "../components/AppBar";
 import MemoList from "../components/MemoList";
@@ -17,7 +17,9 @@ export default function LoginScreen(){
                 <Button label="Submit" />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registered?</Text>
-                    <Text style={styles.footerLink}>Sign up here!</Text>
+                    <TouchableOpacity>
+                        <Text style={styles.footerLink}>Sign up here!</Text>    
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -47,20 +49,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         paddingHorizontal: 8,
         marginBottom: 16,
-    },
-    buttonContainer: {
-        backgroundColor: '#467FD3',
-        borderRadius: 4,
-        //ボタンが横長の時に以下を記載する。
-        alignSelf: 'flex-start',
-        marginBottom: 24,
-    },
-    buttonLabel: {
-        fontSize: 16,
-        lineHeight: 32,
-        paddingVertical: 8,
-        paddingHorizontal: 32,
-        color: 'white',
     },
     footer: {
         //テキストが縦に並んでいる時（初期は縦）

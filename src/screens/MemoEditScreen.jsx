@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, } from 'react-native';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Alert, } from 'react-native';
 import { FAB } from 'react-native-paper';
 import CircleButton from "../components/CircleButton";
 import { Feather } from '@expo/vector-icons'; 
@@ -12,7 +12,7 @@ export default function MemoEditScreen(){
             <View style={styles.inputContainer}>
                 <TextInput value="買い物リスト" multiline style={styles.input}/>
             </View>
-            <CircleButton style={{ bottom: 40 }} name="check"></CircleButton>
+            <CircleButton style={{ bottom: 40 }} name="check" onPress={() => {Alert.alert('pppp');}}></CircleButton>
         </KeyboardAvoidingView>
     ) 
 }
