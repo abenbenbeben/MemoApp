@@ -3,16 +3,19 @@ import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Alert, } from 
 import { FAB } from 'react-native-paper';
 import CircleButton from "../components/CircleButton";
 import { Feather } from '@expo/vector-icons'; 
-import AppBar from "../components/AppBar";
 
-export default function MemoEditScreen(){
+export default function MemoEditScreen(props){
+    const { navigation } = props;
     return (
         <KeyboardAvoidingView style={styles.container} behavior="height">
-            <AppBar />
             <View style={styles.inputContainer}>
                 <TextInput value="買い物リスト" multiline style={styles.input}/>
             </View>
-            <CircleButton style={{ bottom: 40 }} name="check" onPress={() => {Alert.alert('pppp');}}></CircleButton>
+            <CircleButton 
+                style={{ bottom: 40 }} 
+                name="check" 
+                onPress={() => { navigation.goBack(); }}
+            ></CircleButton>
         </KeyboardAvoidingView>
     ) 
 }

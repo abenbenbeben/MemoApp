@@ -1,20 +1,30 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity} from 'react-native';
-import AppBar from "../components/AppBar";
 import Button from "../components/Button";
 
-export default function SignUpScreen(){
+export default function SignUpScreen(props){
+    const { navigation } = props;
     return (
         <View style={styles.container}>
-            <AppBar />
             <View style={styles.inner}>
                 <Text style={styles.title}>Log In</Text>
                 <TextInput value="Email Address" style={styles.input}></TextInput>
                 <TextInput style={styles.input} value="password"></TextInput>
-                <Button label="Regist" onPress={() => {Alert.alert('pppp');}} />
+                <Button 
+                    label="Regist" 
+                    onPress={() => { navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'MemoList'}]
+                    });}} 
+                />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Already?</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => { navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Login' }]
+                        })}}
+                    >
                         <Text style={styles.footerLink}>Log In.</Text>
                     </TouchableOpacity>
                 </View>

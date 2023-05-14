@@ -1,23 +1,33 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { FAB } from 'react-native-paper';
-import AppBar from "../components/AppBar";
 import MemoList from "../components/MemoList";
 import CircleButton from "../components/CircleButton";
 import Button from "../components/Button";
 
-export default function LoginScreen(){
+export default function LoginScreen(props){
+    const { navigation } = props;
     return (
         <View style={styles.container}>
-            <AppBar />
             <View style={styles.inner}>
                 <Text style={styles.title}>Log In</Text>
                 <TextInput value="Email Address" style={styles.input}></TextInput>
                 <TextInput style={styles.input} value="password"></TextInput>
-                <Button label="Submit" />
+                <Button 
+                    label="Submit" 
+                    onPress={() => { navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'MemoList' }],
+                    });}}
+                />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registered?</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => { navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'SignUp'}]
+                        }); }}
+                    >
                         <Text style={styles.footerLink}>Sign up here!</Text>    
                     </TouchableOpacity>
                 </View>
