@@ -1,15 +1,41 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity} from 'react-native';
 import Button from "../components/Button";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function SignUpScreen(props){
     const { navigation } = props;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
+    const auth = getAuth();
+
+    function handlePress() {
+        console.log("handlepress_start")
+        createUserWithEmailAndPassword(auth,email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            // ...
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'MemoList'}]
+            });
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode);
+            Alert.alert(error.code);
+            // ..
+        });
+        
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.inner}>
-                <Text style={styles.title}>Log In</Text>
+                <Text style={styles.title}>Sign Up</Text>
                 <TextInput 
                     value={email} 
                     style={styles.input} 
@@ -30,18 +56,17 @@ export default function SignUpScreen(props){
                 ></TextInput>
                 <Button 
                     label="Regist" 
-                    onPress={() => { navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'MemoList'}]
-                    });}} 
+                    onPress={handlePress} 
                 />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Already?</Text>
                     <TouchableOpacity
-                        onPress={() => { navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'Login' }]
-                        })}}
+                        onPress={() => {
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'Login' }]
+                            });
+                        }}
                     >
                         <Text style={styles.footerLink}>Log In.</Text>
                     </TouchableOpacity>

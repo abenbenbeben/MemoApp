@@ -1,14 +1,37 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { FAB } from 'react-native-paper';
 import MemoList from "../components/MemoList";
 import CircleButton from "../components/CircleButton";
 import Button from "../components/Button";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 export default function LoginScreen(props){
     const { navigation } = props;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
+    const auth = getAuth();
+
+    function handlePress(){
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user.uid);
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'MemoList' }],
+            })
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            Alert.alert(errorCode)
+        });
+        
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.inner}>
@@ -33,10 +56,7 @@ export default function LoginScreen(props){
                 ></TextInput>
                 <Button 
                     label="Submit" 
-                    onPress={() => { navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'MemoList' }],
-                    });}}
+                    onPress={handlePress}
                 />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registered?</Text>
