@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { FAB } from 'react-native-paper';
 import MemoList from "../components/MemoList";
 import CircleButton from "../components/CircleButton";
 import Button from "../components/Button";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
 
 
 export default function LoginScreen(props){
@@ -12,6 +12,24 @@ export default function LoginScreen(props){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
     const auth = getAuth();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const uid = user.uid;
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'MemoList' }],
+                })
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+        return unsubscribe;
+    }, []);
 
     function handlePress(){
         signInWithEmailAndPassword(auth, email, password)
