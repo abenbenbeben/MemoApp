@@ -8,10 +8,10 @@ import SignUpScreen from './src/screens/SignUpScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CardStyleInterpolators } from '@react-navigation/stack';
-import { initializeApp }  from 'firebase/app';
-import { firebaseConfig } from './env';
+import { app, firebaseConfig, db } from './firebaseconfig'; 
+import { getFirestore } from "firebase/firestore";
 
-const app = initializeApp(firebaseConfig);
+
 
 const Stack = createNativeStackNavigator();
 

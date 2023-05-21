@@ -47,7 +47,6 @@ export default function LoginScreen(props){
             const errorMessage = error.message;
             Alert.alert(errorCode)
         });
-        
     }
 
     return (

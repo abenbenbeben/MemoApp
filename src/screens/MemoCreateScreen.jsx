@@ -1,18 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, } from 'react-native';
 import CircleButton from "../components/CircleButton";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
+import { app } from "../../firebaseconfig";
+import { getAuth } from "firebase/auth";
+
+
+
+
 
 export default function MemoCreateScreen(props){
     const {navigation } = props;
+    const [ bodyText, setBodyText ] = useState('');
+    const db = getFirestore(app);
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    function handlePress() {
+        try {
+            const docRef = addDoc(collection(db, `users/${currentUser.uid}/memos`), {
+                bodyText,
+                updateAt: new Date(),
+            });
+            console.log("Document written with ID: ", docRef);
+            navigation.goBack();
+            } 
+        catch (e) {
+            console.error("Error adding document: ", e);
+            }
+       
+    }
     return (
         <KeyboardAvoidingView style={styles.container} behavior="height">
             <View style={styles.inputContainer}>
-                <TextInput value="" multiline style={styles.input}/>
+                <TextInput 
+                    value={bodyText}
+                    multiline
+                    style={styles.input}
+                    onChangeText={(text) => { setBodyText(text); }}
+                    autoFocus
+                />
             </View>
             <CircleButton 
                 style={{ bottom: 40 }} 
                 name="check"
-                onPress={() => { navigation.goBack(); }}
+                onPress={handlePress}
             ></CircleButton>
         </KeyboardAvoidingView>
     ) 
