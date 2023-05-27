@@ -29,7 +29,7 @@ export default function App() {
           animation: "slide_from_right",
         }}
       >
-        <Stack.Screen name="MemoList" component={MemoListScreen} />
+        <Stack.Screen name="MemoList_list" component={MemoListScreen} />
         <Stack.Screen name="MemoDetail" component={MemoDetailScreen} />
         <Stack.Screen name="MemoEdit" component={MemoEditScreen} />
         <Stack.Screen name="MemoCreate" component={MemoCreateScreen} />

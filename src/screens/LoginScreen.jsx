@@ -19,10 +19,10 @@ export default function LoginScreen(props){
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const uid = user.uid;
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'MemoList' }],
-                })
+                //navigation.reset({
+                //   index: 0,
+                //    routes: [{ name: 'MemoList' }],
+                //})
             } else {
                 // User is signed out
                 // ...
@@ -39,7 +39,7 @@ export default function LoginScreen(props){
             console.log(user.uid);
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'MemoList' }],
+                routes: [{ name: 'MemoList_list' }],
             })
         })
         .catch((error) => {
