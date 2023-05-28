@@ -47,6 +47,7 @@ export default function MemoListScreen(props){
             console.log("userMemos:" + userMemos);
             setMemos(userMemos);
         });
+        return unsubscribe;
     }
 
     return (

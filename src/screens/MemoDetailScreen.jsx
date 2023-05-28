@@ -1,23 +1,52 @@
-import React from "react";
+import React,  { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View, } from 'react-native';
 import { FAB } from 'react-native-paper';
 import MemoList from "../components/MemoList";
 import CircleButton from "../components/CircleButton";
+import { getAuth } from "firebase/auth";
+import { app } from "../../firebaseconfig";
+import { collection, getDocs, getFirestore, onSnapshot, doc } from "firebase/firestore";
+import { query, orderBy, limit } from "firebase/firestore";
+import { dateToString } from "../utils";
+
 
 
 export default function MemoDetailScreen(props){
-    const { navigation } = props
+    const { navigation, route } = props
+    const { id } = route.params
+    console.log("id:" + id);
+    const db = getFirestore(app);
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    const [memo, setMemo] = useState(null);
+
+    useEffect(() => {
+        let unsub = () => {};
+        if (currentUser) {
+            const q = doc(db, `users/${currentUser.uid}/memos`, `${id}`);
+            const unsub = onSnapshot(q, (document) => {
+                console.log("Current data: ", document.data());
+                const data = document.data()
+                setMemo({
+                    id: document.id,
+                    bodyText: data.bodyText,
+                    updateAt: data.updateAt.toDate(),
+                })
+            });
+        }
+        return unsub;
+    }, []);
+
+    console.log("memo::"+memo)
     return (
         <View style={styles.container}>
             <View style={styles.memoHeader}>
-                <Text style={styles.memoTitle}>買い物リスト</Text>
-                <Text style={styles.memoDate}>2020年12月24日 10:00</Text>
+                <Text style={styles.memoTitle}>{memo && memo.bodyText }</Text>
+                <Text style={styles.memoDate}>{ memo && dateToString(memo.updateAt) }</Text>
             </View>
             <ScrollView style={styles.memoBody}>
                 <Text style={styles.memoText}>
-                    買い物リスト
-                    書体やレイアウトなど確認するために用います。
-                    本文用などで使い方を間違えると見えることもありますので要注意
+                    { memo && memo.bodyText }
                 </Text>
             </ScrollView>
             <CircleButton

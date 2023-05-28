@@ -5,6 +5,7 @@ import CircleButton from "./CircleButton";
 import { Feather } from '@expo/vector-icons';
 //Conponentには以下記載をしないとnavigatioが使えない。
 import { useNavigation } from '@react-navigation/native';
+import { dateToString } from "../utils";
 
 
 export default function MemoList(props){
@@ -15,7 +16,7 @@ export default function MemoList(props){
     function renderItem({ item }) {
         return (
             <TouchableOpacity
-                onPress={() => { navigation.navigate('MemoDetail');}}
+                onPress={() => { navigation.navigate('MemoDetail', { id: item.id});}}
                 key={item.id}
             >
                 <View style={styles.memoListItem}>
@@ -26,7 +27,7 @@ export default function MemoList(props){
                     >
                         {item.bodyText}
                     </Text>
-                    <Text style={styles.memoListItemDate}>{String(item.updateAt)}</Text>
+                    <Text style={styles.memoListItemDate}>{dateToString(item.updateAt)}</Text>
                     </View>
                     <TouchableOpacity style={styles.memoDelete} onPress={() => {Alert.alert('Are you sure ?')}}>
                         <Feather name="x" size={16} color="#B0B0B0" />
