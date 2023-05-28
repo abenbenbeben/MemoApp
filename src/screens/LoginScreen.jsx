@@ -4,6 +4,7 @@ import { FAB } from 'react-native-paper';
 import MemoList from "../components/MemoList";
 import CircleButton from "../components/CircleButton";
 import Button from "../components/Button";
+import { app } from "../../firebaseconfig";
 import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
 
 
@@ -39,7 +40,7 @@ export default function LoginScreen(props){
             console.log(user.uid);
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'MemoList_list' }],
+                routes: [{ name: 'MemoList' }],
             })
         })
         .catch((error) => {

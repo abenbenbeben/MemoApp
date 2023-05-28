@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Alert, FlatList, } from 'react-native';
 import { FAB } from 'react-native-paper';
 import CircleButton from "./CircleButton";
 import { Feather } from '@expo/vector-icons';
@@ -11,25 +11,38 @@ export default function MemoList(props){
     const navigation = useNavigation();
     const { memos } = props;
     console.log("memos:" + memos)
+
+    function renderItem({ item }) {
+        return (
+            <TouchableOpacity
+                onPress={() => { navigation.navigate('MemoDetail');}}
+                key={item.id}
+            >
+                <View style={styles.memoListItem}>
+                    <View>
+                    <Text 
+                        style={styles.memoListItemTitle}
+                        numberOfLines={1}
+                    >
+                        {item.bodyText}
+                    </Text>
+                    <Text style={styles.memoListItemDate}>{String(item.updateAt)}</Text>
+                    </View>
+                    <TouchableOpacity style={styles.memoDelete} onPress={() => {Alert.alert('Are you sure ?')}}>
+                        <Feather name="x" size={16} color="#B0B0B0" />
+                    </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     return (
         <View>
-            {memos.map((memo) =>  (
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate('MemoDetail');}}
-                        
-                        key={memo.id}
-                    >
-                        <View style={styles.memoListItem}>
-                            <View>
-                            <Text style={styles.memoListItemTitle}>{memo.bodyText}</Text>
-                            <Text style={styles.memoListItemDate}>{String(memo.updateAt)}</Text>
-                            </View>
-                            <TouchableOpacity style={styles.memoDelete} onPress={() => {Alert.alert('Are you sure ?')}}>
-                                <Feather name="x" size={16} color="#B0B0B0" />
-                            </TouchableOpacity>
-                        </View>
-                    </TouchableOpacity>
-            ))}
+            <FlatList
+                data= {memos}
+                renderItem = {renderItem}
+                keyExtractor={(item) => item.id }
+            />
         </View>
     )
 }
