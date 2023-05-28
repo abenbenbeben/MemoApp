@@ -30,7 +30,7 @@ export default function MemoListScreen(props){
 
 
     function asyncCall(){
-        const q = query(collection(db, `users/${currentUser.uid}/memos`), orderBy("updateAt", "asc"));
+        const q = query(collection(db, `users/${currentUser.uid}/memos`), orderBy("updateAt", "desc"));
         //降順、昇順、desc asc
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             let userMemos = [];
