@@ -4,10 +4,12 @@ import { FAB } from 'react-native-paper';
 import MemoList from "../components/MemoList";
 import CircleButton from "../components/CircleButton";
 import LogOutButton from "../components/LogOutButton";
+import Button from "../components/Button";
 import { getAuth } from "firebase/auth";
 import { app } from "../../firebaseconfig";
 import { collection, getDocs, getFirestore, doc, onSnapshot } from "firebase/firestore";
 import { query, orderBy, limit } from "firebase/firestore";
+import Loading from "../components/Loading";
 
 
 export default function MemoListScreen(props){
@@ -16,6 +18,7 @@ export default function MemoListScreen(props){
     const auth = getAuth();
     const currentUser = auth.currentUser;
     const [memos, setMemos] = useState([]);
+    const [isLoading, setLoading] = useState(false)
 
     useEffect(() => {
         navigation.setOptions({
@@ -30,6 +33,7 @@ export default function MemoListScreen(props){
 
 
     function asyncCall(){
+        setLoading(true);
         const q = query(collection(db, `users/${currentUser.uid}/memos`), orderBy("updateAt", "desc"));
         //降順、昇順、desc asc
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -46,8 +50,25 @@ export default function MemoListScreen(props){
             console.log("============================")
             console.log("userMemos:" + userMemos);
             setMemos(userMemos);
+            setLoading(false)
         });
         return unsubscribe;
+    }
+
+    if(memos.length === 0){
+        return (
+            <View style={emptyStyles.container}>
+                <Loading isLoading={isLoading} />
+                <View style={emptyStyles.inner}>
+                    <Text style={emptyStyles.title}>最初のメモを作成しよう！</Text>
+                    <Button 
+                        style={emptyStyles.button} 
+                        label="作成する" 
+                        onPress={() => { navigation.navigate('MemoCreate');}}
+                    />
+                </View>
+            </View>
+        );
     }
 
     return (
@@ -70,4 +91,23 @@ const styles = StyleSheet.create({
       backgroundColor: '#f0f4f8',
     },
   });
+
+const emptyStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    inner: {
+        justifyContent:"center",
+        alignItems: "center",
+    },
+    title: {
+        fontSize: 18,
+        marginBottom: 24,
+    },
+    button: {
+        alignSelf: "center",
+    },
+})
 

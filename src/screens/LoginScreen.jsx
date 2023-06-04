@@ -6,6 +6,7 @@ import CircleButton from "../components/CircleButton";
 import Button from "../components/Button";
 import { app } from "../../firebaseconfig";
 import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
+import Loading from "../components/Loading";
 
 
 export default function LoginScreen(props){
@@ -13,6 +14,8 @@ export default function LoginScreen(props){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
     const auth = getAuth();
+
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,6 +36,7 @@ export default function LoginScreen(props){
     }, []);
 
     function handlePress(){
+        setLoading(true);
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
@@ -47,11 +51,15 @@ export default function LoginScreen(props){
             const errorCode = error.code;
             const errorMessage = error.message;
             Alert.alert(errorCode)
+        })
+        .then(() => {
+            setLoading(false);
         });
     }
 
     return (
         <View style={styles.container}>
+            <Loading isLoading={isLoading}/>
             <View style={styles.inner}>
                 <Text style={styles.title}>Log In</Text>
                 <TextInput 

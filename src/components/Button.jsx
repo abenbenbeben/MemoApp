@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 
 export default function Button(props){
-    const { label, onPress } = props;
+    const { label, onPress, style } = props;
     return (
-        <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
+        <TouchableOpacity style={[styles.buttonContainer, style]} onPress={onPress}>
             <Text style={styles.buttonLabel}>{ label }</Text>
         </TouchableOpacity>
     ) 
