@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity} from 'react-native';
 import Button from "../components/Button";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { translateErrors } from "../utils";
+import Loading from "../components/Loading";
 
 export default function SignUpScreen(props){
     const { navigation } = props;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
     const auth = getAuth();
+    const [isLoading, setLoading] = useState(false)
 
     function handlePress() {
         console.log("handlepress_start")
+        setLoading(true)
         createUserWithEmailAndPassword(auth,email, password)
         .then((userCredential) => {
             // Signed in
@@ -21,19 +25,20 @@ export default function SignUpScreen(props){
                 index: 0,
                 routes: [{ name: 'MemoList'}]
             });
+            setLoading(false)
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode);
-            Alert.alert(error.code);
+            const errorMsg = translateErrors(error.code)
+            Alert.alert(errorMsg.title, errorMsg.description);
             // ..
+            setLoading(false)
         });
         
     };
 
     return (
         <View style={styles.container}>
+            <Loading isLoading={isLoading} />
             <View style={styles.inner}>
                 <Text style={styles.title}>Sign Up</Text>
                 <TextInput 

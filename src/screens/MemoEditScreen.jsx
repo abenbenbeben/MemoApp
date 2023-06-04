@@ -7,6 +7,7 @@ import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { app } from "../../firebaseconfig";
 import { getAuth } from "firebase/auth";
+import { translateErrors } from "../utils";
 
 
 export default function MemoEditScreen(props){
@@ -28,6 +29,8 @@ export default function MemoEditScreen(props){
                 navigation.goBack({id: id});
                 } 
             catch (e) {
+                const errorMsg = translateErrors(error.code);
+                Alert.alert(error.title, error.description)
                 console.error("Error adding document: ", e);
                 }
         }

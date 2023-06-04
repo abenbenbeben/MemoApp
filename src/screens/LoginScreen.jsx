@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import { app } from "../../firebaseconfig";
 import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
 import Loading from "../components/Loading";
+import { translateErrors } from "../utils";
 
 
 export default function LoginScreen(props){
@@ -23,10 +24,10 @@ export default function LoginScreen(props){
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const uid = user.uid;
-                //navigation.reset({
-                //   index: 0,
-                //    routes: [{ name: 'MemoList' }],
-                //})
+                navigation.reset({
+                   index: 0,
+                    routes: [{ name: 'MemoList' }],
+                })
             } else {
                 // User is signed out
                 // ...
@@ -48,9 +49,8 @@ export default function LoginScreen(props){
             })
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            Alert.alert(errorCode)
+            const errorMsg = translateErrors(error.code)
+            Alert.alert(errorMsg.title, errorMsg.description)
         })
         .then(() => {
             setLoading(false);
