@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { dateToString } from "../utils";
 import { getAuth } from "firebase/auth";
 import { app } from "../../firebaseconfig";
-import { collection, getDocs, getFirestore, doc, onSnapshot, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, getFirestore, doc, deleteDoc } from "firebase/firestore";
 import Loading from "./Loading";
 
 
@@ -52,14 +52,14 @@ export default function MemoList(props){
                 key={item.id}
             >
                 <View style={styles.memoListItem}>
-                    <View>
-                    <Text 
-                        style={styles.memoListItemTitle}
-                        numberOfLines={1}
-                    >
-                        {item.bodyText}
-                    </Text>
-                    <Text style={styles.memoListItemDate}>{dateToString(item.updateAt)}</Text>
+                    <View style={styles.memoInner}>
+                        <Text 
+                            style={styles.memoListItemTitle}
+                            numberOfLines={1}
+                        >
+                            {item.bodyText}
+                        </Text>
+                        <Text style={styles.memoListItemDate}>{dateToString(item.updateAt)}</Text>
                     </View>
                     
                     <TouchableOpacity style={styles.memoDelete} onPress={ () => { deleteMemo(item.id)}}>
@@ -108,5 +108,8 @@ const styles = StyleSheet.create({
     },
     memoDelete: {
         padding: 8,
-    }
+    },
+    memoInner: {
+        flex: 1,
+    },
 })

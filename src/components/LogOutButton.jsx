@@ -4,11 +4,13 @@ import { TouchableOpacity, Text, StyleSheet, Alert} from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
 
-export default function LogOutButton() {
+export default function LogOutButton(props) {
     const navigation = useNavigation();
     const auth = getAuth();
+    const { unsubscribe } = props;
 
     function handlePress(){
+        unsubscribe;
         signOut(auth).then(() => {
             navigation.reset({
                 index: 0,

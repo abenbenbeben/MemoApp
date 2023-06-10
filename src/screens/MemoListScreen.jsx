@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert, } from 'react-native';
 import { FAB } from 'react-native-paper';
 import MemoList from "../components/MemoList";
 import CircleButton from "../components/CircleButton";
@@ -20,38 +20,47 @@ export default function MemoListScreen(props){
     const [memos, setMemos] = useState([]);
     const [isLoading, setLoading] = useState(false)
 
+    console.log("memolistScreen")
+
+    useEffect(() => {
+        unsubscribe = asyncCall();
+    }, []);
+
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <LogOutButton />,
+            headerRight: () => <LogOutButton unsubscribe={unsubscribe}/>,
         });
     }, []);
 
-    
-    useEffect(() => {
-        asyncCall();
-    }, []);
 
 
     function asyncCall(){
+        console.log("asyncCallstart~~~~~~~~~~~~~~~~~~~~~~~~~~")
         setLoading(true);
-        const q = query(collection(db, `users/${currentUser.uid}/memos`), orderBy("updateAt", "desc"));
         //降順、昇順、desc asc
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            let userMemos = [];
-            querySnapshot.forEach((doc) => {
-                console.log("doc:"+ doc)
-                const data = doc.data();
-                userMemos.push({
-                    id: doc.id,
-                    bodyText: data.bodyText,
-                    updateAt: data.updateAt.toDate(),
+        let unsubscribe = "";
+        if(currentUser){
+            const q = query(collection(db, `users/${currentUser.uid}/memos`), orderBy("updateAt", "desc"));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                let userMemos = [];
+                querySnapshot.forEach((doc) => {
+                    console.log("doc:"+ doc)
+                    const data = doc.data();
+                    userMemos.push({
+                        id: doc.id,
+                        bodyText: data.bodyText,
+                        updateAt: data.updateAt.toDate(),
+                    });
                 });
+                console.log("============================")
+                console.log("userMemos:" + userMemos);
+                setMemos(userMemos);
+                setLoading(false)
+            }, () => {
+                setLoading(false);
+                Alert.alert('データの読み込みに失敗しました。')
             });
-            console.log("============================")
-            console.log("userMemos:" + userMemos);
-            setMemos(userMemos);
-            setLoading(false)
-        });
+        }
         return unsubscribe;
     }
 

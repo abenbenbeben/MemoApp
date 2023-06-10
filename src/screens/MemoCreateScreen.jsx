@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, } from 'react-native';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Alert,} from 'react-native';
 import CircleButton from "../components/CircleButton";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 import { app } from "../../firebaseconfig";
 import { getAuth } from "firebase/auth";
+import { translateErrors } from "../utils";
 
 
 
@@ -26,7 +27,8 @@ export default function MemoCreateScreen(props){
             navigation.goBack();
             } 
         catch (e) {
-            console.error("Error adding document: ", e);
+            const errorMsg = translateErrors(error.code)
+            Alert.alert(errorMsg.title,errorMsg.description)
             }
        
     }

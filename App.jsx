@@ -10,10 +10,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CardStyleInterpolators } from '@react-navigation/stack';
 import { app, firebaseConfig, db } from './firebaseconfig'; 
 import { getFirestore } from "firebase/firestore";
+import { LogBox } from 'react-native';
 
 
 
 const Stack = createNativeStackNavigator();
+LogBox.ignoreLogs(['Setting a timer']);
 
 export default function App() {
   return (
