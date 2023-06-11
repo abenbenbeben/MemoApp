@@ -1,26 +1,31 @@
 {
   "expo": {
-    "name": "Memo",
-    "slug": "Memo",
+    "name": "ShareMemostyle",
+    "slug": "ShareMemostyle",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "jp.abyblog.memoapp",
+      "buildNummber": "1.0.0"
     },
     "android": {
+      "package": "jp.abyblog.memoapp",
+      "versionCode": 1,
+      "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/adaptive_icon_foreground.png",
+        "backgroundImage": "./assets/adaptive-icon_background.png"
       }
     },
     "web": {
